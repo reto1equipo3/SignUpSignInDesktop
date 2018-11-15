@@ -166,11 +166,12 @@ public class UserViewDesktopFxmlController extends GenericController {
         }
 
         //La foto del usuario
-        if (user.getPhoto() == null) {
+/*        if (user.getPhoto() == null) {
             imgUserPhoto.setImage(new Image("/signupsignindesktop/ui/img/defaultUserPhoto.png"));
         } else {
             imgUserPhoto.setImage((Image) user.getPhoto());
         }
+*/
 
         //El boton esta escuchando. 
         btnLogOut.setOnAction(this::handleLogOutAction);

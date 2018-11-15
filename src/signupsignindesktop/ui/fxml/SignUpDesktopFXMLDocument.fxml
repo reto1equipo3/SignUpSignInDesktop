@@ -17,8 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="signupsignindesktop.ui.controllers.SignUpDesktopFxmlController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signupsignindesktop.ui.controllers.SignUpDesktopFxmlController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.0" minWidth="0.0" percentWidth="5.0" prefWidth="0.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" percentWidth="20.0" prefWidth="275.0" />
@@ -51,15 +50,15 @@
       <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <TextField id="txtFullname" fx:id="txtFullName" promptText="Enter full name" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <TextField fx:id="txtFullName" promptText="Enter full name" GridPane.columnIndex="5" GridPane.rowIndex="1" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="199.0" text="Full name:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-      <TextField id="txtEmail" fx:id="txtEmail" promptText="Enter email" GridPane.columnIndex="5" GridPane.rowIndex="3">
+      <TextField fx:id="txtEmail" promptText="Enter email" GridPane.columnIndex="5" GridPane.rowIndex="3">
          <tooltip>
             <Tooltip text="Example: team_3@mail.com" />
          </tooltip></TextField>
-      <TextField id="txtLogin" fx:id="txtLogin" promptText="Enter login" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-      <PasswordField id="pwdPassword" fx:id="pwdPassword" promptText="Enter password" GridPane.columnIndex="5" GridPane.rowIndex="7" />
-      <PasswordField id="pwdConfirmPassword" fx:id="pwdConfirmPassword" promptText="Re-enter password" GridPane.columnIndex="5" GridPane.rowIndex="9" />
+      <TextField fx:id="txtLogin" promptText="Enter login" GridPane.columnIndex="5" GridPane.rowIndex="5" />
+      <PasswordField fx:id="pwdPassword" promptText="Enter password" GridPane.columnIndex="5" GridPane.rowIndex="7" />
+      <PasswordField fx:id="pwdConfirmPassword" promptText="Re-enter password" GridPane.columnIndex="5" GridPane.rowIndex="9" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="196.0" text="Email:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="316.0" text="Login:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
       <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="197.0" text="Password:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
@@ -84,13 +83,13 @@
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="11">
          <children>
             <Label id="lblErrorTermsOfUse" fx:id="lblErrorTermsOfUse" text="*" textFill="RED" visible="false" />
-            <CheckBox id="chkTermsOfUse" fx:id="chkTermsOfUse" mnemonicParsing="false" text="I agree to the " />
+            <CheckBox fx:id="chkTermsOfUse" mnemonicParsing="false" text="I agree to the " />
             <Hyperlink id="hpTermsOfUse" fx:id="hpTermsOfUse" onAction="#handleShowTermsOfUseAction" text="Terms of Use &amp; Privacy Policy" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="13">
          <children>
-            <Button id="btnSignUp" fx:id="btnSignUp" mnemonicParsing="false" onAction="#handleSignUpAction" text="Sign Up" />
+            <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#handleSignUpAction" text="Sign Up" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="15">
