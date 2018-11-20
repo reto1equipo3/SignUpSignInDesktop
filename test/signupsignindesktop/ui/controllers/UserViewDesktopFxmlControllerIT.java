@@ -38,28 +38,87 @@ public class UserViewDesktopFxmlControllerIT extends ApplicationTest {
         {
         }
     }
+    
+    /**
+     * Initializing handleWindow of Sign in, with button Log out
+     */
 
     @Test
-    public void test1_initialStage() {
+    public void test1_initialStageLogOut() {
 
         /* doubleClickOn("#txtLogin");
         verifyThat("#txtLogin", hasText(" "));
         doubleClickOn("#pwdPassword");
         verifyThat("#pwdPassword", hasText(" ")); */
-        clickOn("#txtLogin");
-        write("login1");
+        doubleClickOn("#txtLogin");
+        write("Leticia");
         clickOn("#pwdPassword");
-        write("password1");
+        write("Abcd*123");
         clickOn("#btnSignIn");
         verifyThat("#gpVistaUsuario", isVisible());
 
         //Prueba Log Out
-        clickOn("#btnSettings");
+        clickOn("#btnExit");
         clickOn("#btnLogOut");
         //Dialog alert aceptar va ha volver a la vista de Sign In          
+        sleep(2000);
+        push(KeyCode.ENTER);
+        verifyThat("#gpSignIn", isVisible());
+        sleep(2000);
+
+    }
+    /**
+     * Test to prove a bad login.
+     */
+
+    @Test
+    public void test2_BadLogin() {
+        doubleClickOn("#txtLogin");
+        write("Leticita");
+        clickOn("#pwdPassword");
+        write("Abcd*123");
+        clickOn("#btnSignIn");
+        verifyThat("#gpVistaUsuario", isVisible());
+
+    }
+
+    /**
+     * Test to prove a bad password
+     */
+    @Test
+    public void test2_BadPssword() {
+        doubleClickOn("#txtLogin");
+        write("Leticia");
+        clickOn("#pwdPassword");
+        write("Abcd*123444");
+        clickOn("#btnSignIn");
+        verifyThat("#gpVistaUsuario", isVisible());
+
+    }
+
+    /**
+     * Close application  with button close
+     */
+    @Test
+    public void test3_initialStageClose() {
+
+        /* doubleClickOn("#txtLogin");
+        verifyThat("#txtLogin", hasText(" "));
+        doubleClickOn("#pwdPassword");
+        verifyThat("#pwdPassword", hasText(" ")); */
+        doubleClickOn("#txtLogin");
+        write("Leticia");
+        clickOn("#pwdPassword");
+        write("Abcd*123");
+        clickOn("#btnSignIn");
+        verifyThat("#gpVistaUsuario", isVisible());
+
+        //Prueba Log Out
+        clickOn("#btnExit");
+        clickOn("#btnClose");
+        //Dialog alert aceptar va ha volver a la vista de Sign In          
         sleep(1000);
-        push(KeyCode.ENTER); 
-        verifyThat("#gpIdentificar", isVisible());
+        push(KeyCode.ENTER);
 
     }
 
