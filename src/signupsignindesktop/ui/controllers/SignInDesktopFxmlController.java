@@ -319,13 +319,16 @@ public class SignInDesktopFxmlController extends GenericController {
 
 			//Initializes stage
 			controller.initStage(root);
+                        
                         //  Y vaciamos los campos para cuando se oculte la USERVIEW
+                        
                         if(!chkRememberLogin.isSelected()){
                         txtLogin.setText("");
                         pwdPassword.setText("");
                         }else{
                          pwdPassword.setText("");
                         }
+                        //NO QUEREMOS QUE SE ESCONDA
 			/*//hides login stage
 			stage.hide();*/
 		} catch (IOException e) {

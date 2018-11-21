@@ -86,7 +86,7 @@ public class UserViewDesktopFxmlControllerIT extends ApplicationTest {
      * Test to prove a bad password
      */
     @Test
-    public void test2_BadPssword() {
+    public void test3_BadPssword() {
         doubleClickOn("#txtLogin");
         write("Leticia");
         clickOn("#pwdPassword");
@@ -100,7 +100,7 @@ public class UserViewDesktopFxmlControllerIT extends ApplicationTest {
      * Close application  with button close
      */
     @Test
-    public void test3_initialStageClose() {
+    public void test4_initialStageClose() {
 
         /* doubleClickOn("#txtLogin");
         verifyThat("#txtLogin", hasText(" "));
@@ -112,14 +112,13 @@ public class UserViewDesktopFxmlControllerIT extends ApplicationTest {
         write("Abcd*123");
         clickOn("#btnSignIn");
         verifyThat("#gpVistaUsuario", isVisible());
-
         //Prueba Log Out
         clickOn("#btnExit");
         clickOn("#btnClose");
         //Dialog alert aceptar va ha volver a la vista de Sign In          
-        sleep(1000);
+        sleep(2000);
         push(KeyCode.ENTER);
-
+        sleep(1000);
     }
 
 }

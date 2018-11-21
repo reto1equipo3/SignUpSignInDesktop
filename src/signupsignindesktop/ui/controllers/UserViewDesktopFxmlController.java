@@ -210,15 +210,19 @@ public class UserViewDesktopFxmlController extends GenericController {
         }
 
         //Mostrar lastAccess del user
+         LOGGER.info(user.getLastAcess().toString());
+         LOGGER.info(new Date(user.getLastAcess().getTime()).toString());
+        if(user.getLastAcess()!= null ){
         String date = new Date(user.getLastAcess().getTime()).toString();
+       
+        lblLastAccessUser.setText(date);
+        }else {      
+         lblLastAccessUser.setText("Last Access not found");
+        } 
 
-        if (user.getLastAcess() == null) {
-            lblLastAccessUser.setText("Last Access not found");
-        } else {
+            
 
-            lblLastAccessUser.setText(date);
-
-        }
+        
 
         //Mostrar el
         //La foto del usuario
