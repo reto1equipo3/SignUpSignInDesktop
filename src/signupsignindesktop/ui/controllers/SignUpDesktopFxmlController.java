@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.UserBean;
@@ -132,6 +133,7 @@ public class SignUpDesktopFxmlController extends GenericController {
 		// Set window properties
 		stage.setTitle("Sign Up");
 		stage.setResizable(false);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		// Set window's events handlers
 		stage.setOnShowing(this::handleWindowShowing);
 		// Set control events handlers
@@ -154,7 +156,6 @@ public class SignUpDesktopFxmlController extends GenericController {
 		LOGGER.info("SignUpDesktopFxmlController::handleWindowShowing: Setting default window state.");
 
 		// Full name
-		txtFullName.requestFocus();
 		lblErrorFullName.setVisible(false);
 		txtFullName.setStyle("-fx-border-color:AXIS_COLOR;");
 
@@ -192,7 +193,6 @@ public class SignUpDesktopFxmlController extends GenericController {
 	 * @param newValue The new value of the observable.
 	 */
 	private void textChanged(ObservableValue observable, String oldValue, String newValue) {
-		LOGGER.log(Level.INFO, "SignUpDesktopFxmlController::textChanged: {0}''s text changed.", observable.getClass().getSimpleName());
 		// Set fullname TextField to default
 		if (!txtFullName.getText().trim().isEmpty()) {
 			txtFullName.setStyle("-fx-border-color:AXIS_COLOR;");
@@ -224,7 +224,6 @@ public class SignUpDesktopFxmlController extends GenericController {
 	 * @param newValue The new value of the observable.
 	 */
 	private void changed(ObservableValue observable, Boolean oldValue, Boolean newValue) {
-		LOGGER.log(Level.INFO, "SignUpDesktopFxmlController::changed: {0}''s selection changed.", observable.getClass().getSimpleName());
 		if (chkTermsOfUse.isSelected()) {
 			lblErrorTermsOfUse.setVisible(false);
 		}
@@ -269,7 +268,7 @@ public class SignUpDesktopFxmlController extends GenericController {
 		alert.setHeaderText(null);
 		alert.setContentText("New browser window will be opened. Do you agree?");
 
-		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> hostServices.showDocument("file:///C:/Users/iRoib/Documents/NetBeansProjects/SignUpSignInApp/src/signupsignindesktop/ui/controllers/PruebaTermsOfUse.pdf"));
+		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> hostServices.showDocument("file:///C:/Users/iRoib/Documents/NetBeansProjects/SignUpSignInDesktop/src/signupsignindesktop/ui/img/TermsOfUse.pdf"));
 
 		/*
 		hostServices.showDocument("/PruebaTermsOfUse.pdf");
@@ -284,21 +283,19 @@ public class SignUpDesktopFxmlController extends GenericController {
 	 * @throws IllegalArgumentException Fullname is not valid
 	 */
 	private void validateFullname(String fullname) throws IllegalArgumentException {
-		String FULLNAME_PATTERN = "[a-zA-Z ñÑ]+$";
+		String FULLNAME_PATTERN = "[a-zA-Z ñÑáÁéÉíÍóÓúÚ]+$";
 		Pattern pattern = Pattern.compile(FULLNAME_PATTERN);
 
 		if (fullname == null || fullname.trim().equals("")) {
-			throw new IllegalArgumentException("Field can not be empty.");
+			throw new IllegalArgumentException("* Field can not be empty.");
 		}
 
 		if (fullname.trim().length() >= MAX_LENGTH_FULLNAME) {
-			throw new IllegalArgumentException("Fullname is too long.");
+			throw new IllegalArgumentException("* Fullname is too long.");
 		}
 
 		if (!pattern.matcher(fullname).matches()) {
-			//throw new IllegalArgumentException("Fullname can only be composed of "
-			//+ "uppercase or lowercase letters.");
-			throw new IllegalArgumentException("Only uppercase or lowercase letters.");
+			throw new IllegalArgumentException("* Only uppercase or lowercase letters.");
 		}
 	}
 
@@ -313,15 +310,15 @@ public class SignUpDesktopFxmlController extends GenericController {
 		Pattern pattern = Pattern.compile(EMAIL_PATTERN);
 
 		if (email == null || email.trim().equals("")) {
-			throw new IllegalArgumentException("Field can not be empty");
+			throw new IllegalArgumentException("* Field can not be empty.");
 		}
 
 		if (email.trim().length() >= MAX_LENGTH_EMAIL) {
-			throw new IllegalArgumentException("Email is too long.");
+			throw new IllegalArgumentException("* Email is too long.");
 		}
 
 		if (!pattern.matcher(email).matches()) {
-			throw new IllegalArgumentException("Enter a valid email.");
+			throw new IllegalArgumentException("* Enter a valid email.");
 		}
 	}
 
@@ -336,15 +333,15 @@ public class SignUpDesktopFxmlController extends GenericController {
 		Pattern pattern = Pattern.compile(LOGIN_PATTERN);
 
 		if (login == null || login.trim().equals("")) {
-			throw new IllegalArgumentException("How are you supposed to sign in?");
+			throw new IllegalArgumentException("* How are you supposed to sign in?");
 		}
 
 		if (login.trim().length() >= MAX_LENGTH_LOGIN) {
-			throw new IllegalArgumentException("Login is too long.");
+			throw new IllegalArgumentException("* Login is too long.");
 		}
 
 		if (!pattern.matcher(login).matches()) {
-			throw new IllegalArgumentException("Login can only be composed by letters and numbers");
+			throw new IllegalArgumentException("* Login can only be composed by letters and numbers.");
 		}
 	}
 
@@ -360,23 +357,23 @@ public class SignUpDesktopFxmlController extends GenericController {
 		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
 		if (password == null || password.trim().equals("")) {
-			throw new IllegalArgumentException("Security first, enter a password.");
+			throw new IllegalArgumentException("* Security first, enter a password.");
 		}
 
 		if (password.trim().length() >= MAX_LENGTH_PASSWORD) {
-			throw new IllegalArgumentException("Password is too long.");
+			throw new IllegalArgumentException("* Password is too long.");
+		}
+
+		if (password.trim().length() < MIN_LENGTH_PASSWORD) {
+			throw new IllegalArgumentException("* Password is too short.");
 		}
 
 		if (!pattern.matcher(password).matches()) {
-			throw new IllegalArgumentException("Not secure enough! Try combining lowercase, uppercase and numbers.");
-		}
-
-		if (password.trim().length() < 6) {
-			throw new IllegalArgumentException("Password is too short.");
+			throw new IllegalArgumentException("* Not secure enough! Try combining lowercase, uppercase and numbers.");
 		}
 
 		if (confirmPassword == null || (!confirmPassword.trim().equals(password))) {
-			throw new IllegalArgumentException("Passwords must coincide.");
+			throw new IllegalArgumentException("* Passwords must coincide.");
 		}
 	}
 
@@ -487,22 +484,21 @@ public class SignUpDesktopFxmlController extends GenericController {
 
 			} catch (LoginExistingException e) {
 				LOGGER.log(Level.SEVERE, "Sign Up controller::handleSignUpAction: {0}", e.getMessage());
-				lblErrorLogin.setText("Login already exists.");
+				lblErrorLogin.setText("* Login already exists.");
 				lblErrorLogin.setVisible(true);
 			} catch (EmailNotUniqueException e) {
 				LOGGER.log(Level.SEVERE, "Sign Up controller::handleSignUpAction: {0}", e.getMessage());
-				lblErrorEmail.setText("Email already used.");
+				lblErrorEmail.setText("* Email already used.");
 				lblErrorEmail.setVisible(true);
-			} catch (Exception e) {
+			} catch (DatabaseException e) {
 				LOGGER.log(Level.SEVERE, "Sign Up controller::handleSignUpAction: {0}", e.getMessage());
 
 				Alert alert = new Alert(Alert.AlertType.ERROR);
 				alert.setHeaderText(null);
 				alert.setContentText("Sorry, something went wrong. Try again.");
 				alert.showAndWait();
-			} 
+			}
 		}
-
 	}
 
 	/**
@@ -520,7 +516,7 @@ public class SignUpDesktopFxmlController extends GenericController {
 			// Initialize stage
 			controller.initStage(root);
 			// Hide sign up stage
-			stage.hide();
+			//stage.hide();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 				"UI SignUpDesktopFxmlController: Error opening sign in window.",

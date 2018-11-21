@@ -16,7 +16,7 @@ import static org.testfx.matcher.base.NodeMatchers.isFocused;
 import static org.testfx.matcher.base.NodeMatchers.isInvisible;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
-import signupsignindesktop.applications.Application;
+import signupsignindesktop.applications.SignUpTestApplication;
 
 /**
  *
@@ -27,7 +27,7 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		new Application().start(stage);
+		new SignUpTestApplication().start(stage);
 	}
 
 	@Override
@@ -39,7 +39,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test0_InitialState() {
-        clickOn("#hpSignUp");
 		// Fullname
 		verifyThat("#txtFullName", isEnabled());
 		verifyThat("#txtFullName", hasText(""));
@@ -81,7 +80,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test1_ErrorsAppearAndDisappear() {
-        clickOn("#hpSignUp");
 		// Click on sign up button with all fields empty
 		clickOn("#btnSignUp");
 
@@ -120,7 +118,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test2_OnlyValidFullnameAccepted() {
-        clickOn("#hpSignUp");
 		// Not null
 		clickOn("#btnSignUp");
 		verifyThat("#lblErrorFullName", isVisible());
@@ -151,7 +148,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test3_OnlyValidEmailAccepted() {
-        clickOn("#hpSignUp");
 		// Not null
 		clickOn("#btnSignUp");
 		verifyThat("#lblErrorEmail", isVisible());
@@ -187,7 +183,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test4_OnlyValidLoginAccepted() {
-        clickOn("#hpSignUp");
 		// Not null
 		clickOn("#btnSignUp");
 		verifyThat("#lblErrorLogin", isVisible());
@@ -224,7 +219,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test5_OnlyValidPasswordAccepted() {
-        clickOn("#hpSignUp");
 		// Not null
 		clickOn("#btnSignUp");
 		verifyThat("#lblErrorPassword", isVisible());
@@ -276,7 +270,6 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 	 */
 	@Test
 	public void test7_GoToSignIn(){
-        clickOn("#hpSignUp");
 		clickOn("#hpSignIn");
 		
 		verifyThat("#gpIdentificar", isVisible());

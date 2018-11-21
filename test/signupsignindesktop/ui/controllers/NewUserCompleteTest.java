@@ -20,7 +20,7 @@ import signupsignindesktop.applications.Application;
  */
 public class NewUserCompleteTest extends ApplicationTest {
 	
-	private UserBean newUser = new UserBean(null, "test08", "test08@email.com", "Test Eight", null, null, "Abcd*1234", null, null);
+	private UserBean newUser = new UserBean(null, "test09", "test09@email.com", "Test Nine", null, null, "Abcd*1234", null, null);
 
 	@Override
 	public void start(Stage stage) throws Exception {

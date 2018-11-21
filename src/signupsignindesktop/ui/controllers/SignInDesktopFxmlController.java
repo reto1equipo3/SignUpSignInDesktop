@@ -234,7 +234,7 @@ public class SignInDesktopFxmlController extends GenericController {
 			//Initializes stage
 			controller.initStage(root);
 			//hides login stage
-			stage.hide();
+			//stage.hide();
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 				"UI SignInDesktopFxmlController: Error opening SignUp window: {0}",

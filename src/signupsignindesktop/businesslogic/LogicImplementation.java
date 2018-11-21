@@ -97,7 +97,7 @@ public class LogicImplementation implements Logic {
 			case E_LOGINEXISTS:
 				LOGGER.log(Level.SEVERE,
 					"LogiImplementation::signUp: Exception adding login.");
-				throw new EmailNotUniqueException("Error adding login:\n" + message.getMessage());
+				throw new LoginExistingException("Error adding login:\n" + message.getMessage());
 			case E_ERROR:
 				LOGGER.log(Level.SEVERE,
 					"LogiImplementation::signUp: Exception something went wrong.");
