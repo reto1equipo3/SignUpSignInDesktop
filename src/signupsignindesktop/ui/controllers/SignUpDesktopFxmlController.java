@@ -157,19 +157,19 @@ public class SignUpDesktopFxmlController extends GenericController {
 
 		// Full name
 		lblErrorFullName.setVisible(false);
-		txtFullName.setStyle("-fx-border-color:AXIS_COLOR;");
+		txtFullName.setStyle("");
 
 		// Email
-		txtEmail.setStyle("-fx-border-color:AXIS_COLOR;");
+		txtEmail.setStyle("");
 		lblErrorEmail.setVisible(false);
 
 		// Login
-		txtLogin.setStyle("-fx-border-color:AXIS_COLOR;");
+		txtLogin.setStyle("");
 		lblErrorLogin.setVisible(false);
 
 		// Password
-		pwdPassword.setStyle("-fx-border-color:AXIS_COLOR;");
-		pwdConfirmPassword.setStyle("-fx-border-color:AXIS_COLOR;");
+		pwdPassword.setStyle("");
+		pwdConfirmPassword.setStyle("");
 		lblErrorPassword.setVisible(false);
 
 		// Choose file
@@ -195,23 +195,23 @@ public class SignUpDesktopFxmlController extends GenericController {
 	private void textChanged(ObservableValue observable, String oldValue, String newValue) {
 		// Set fullname TextField to default
 		if (!txtFullName.getText().trim().isEmpty()) {
-			txtFullName.setStyle("-fx-border-color:AXIS_COLOR;");
+			txtFullName.setStyle("");
 			lblErrorFullName.setVisible(false);
 		}
 		// Set email TextField to default
 		if (!txtEmail.getText().trim().isEmpty()) {
-			txtEmail.setStyle("-fx-border-color:AXIS_COLOR;");
+			txtEmail.setStyle("");
 			lblErrorEmail.setVisible(false);
 		}
 		// Set login TextField to default
 		if (!txtLogin.getText().trim().isEmpty()) {
-			txtLogin.setStyle("-fx-border-color:AXIS_COLOR;");
+			txtLogin.setStyle("");
 			lblErrorLogin.setVisible(false);
 		}
 		// Set password and confirm password PasswordFields to default
 		if (!pwdPassword.getText().trim().isEmpty()) {
-			pwdPassword.setStyle("-fx-border-color:AXIS_COLOR;");
-			pwdConfirmPassword.setStyle("-fx-border-color:AXIS_COLOR;");
+			pwdPassword.setStyle("");
+			pwdConfirmPassword.setStyle("");
 			lblErrorPassword.setVisible(false);
 		}
 	}
@@ -264,15 +264,15 @@ public class SignUpDesktopFxmlController extends GenericController {
 	private void handleShowTermsOfUseAction(ActionEvent event) {
 		LOGGER.info("SignUpDesktopFxmlController::handleShowTermsOfUseAction: Beggining show terms of use action.");
 
-		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		Alert alert = new Alert(Alert.AlertType.INFORMATION); // Change alert type to CONFIRMATION
 		alert.setHeaderText(null);
-		alert.setContentText("New browser window will be opened. Do you agree?");
+		alert.setContentText("This feature is not implemented yet. Sorry for the inconvenience.");
+		alert.showAndWait();
 
-		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> hostServices.showDocument("file:///C:/Users/iRoib/Documents/NetBeansProjects/SignUpSignInDesktop/src/signupsignindesktop/ui/img/TermsOfUse.pdf"));
-
+		// Uncomment this when HostServices' show document path problems are resolved
 		/*
-		hostServices.showDocument("/PruebaTermsOfUse.pdf");
-		hostServices.showDocument("file:///C:/Users/iRoib/Documents/NetBeansProjects/SignUpSignInApp/src/signupsignindesktop/ui/controllers/PruebaTermsOfUse.pdf");
+		alert.setContentText("New browser window will be opened. Do you agree?");
+		alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> hostServices.showDocument("file:///C:/Users/iRoib/Documents/NetBeansProjects/SignUpSignInDesktop/src/signupsignindesktop/ui/img/TermsOfUse.pdf"));
 		 */
 	}
 
@@ -397,6 +397,7 @@ public class SignUpDesktopFxmlController extends GenericController {
 		if (!chkTermsOfUse.isSelected()) {
 			LOGGER.log(Level.SEVERE, "Sign Up controller::handleSignUpAction: Terms of use not accepted.");
 
+			lblErrorTermsOfUse.setText("* Required");
 			lblErrorTermsOfUse.setVisible(true);
 
 			validFields = false;

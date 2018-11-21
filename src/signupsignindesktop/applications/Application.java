@@ -29,7 +29,7 @@ public class Application extends javafx.application.Application {
      /**
      * Entry point for the application. Loads, sets and shows primary window(SignIn window).
      * @param stage The primary window of the application
-     * @throws Exception 
+     * @throws Exception Something went wrong
      */
     @Override
     public void start(Stage stage) throws Exception {

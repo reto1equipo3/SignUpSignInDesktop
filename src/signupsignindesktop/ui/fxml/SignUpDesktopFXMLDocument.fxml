@@ -26,7 +26,7 @@
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="2.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" percentWidth="20.0" prefWidth="261.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="0.0" percentWidth="2.0" prefWidth="0.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" percentWidth="5.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" percentWidth="15.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" percentWidth="2.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" percentWidth="2.0" prefWidth="100.0" />
@@ -51,7 +51,7 @@
   </rowConstraints>
    <children>
       <TextField fx:id="txtFullName" promptText="Enter full name" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="199.0" text="Full name:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="199.0" text="Full name:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
       <TextField fx:id="txtEmail" promptText="Enter email" GridPane.columnIndex="5" GridPane.rowIndex="3">
          <tooltip>
             <Tooltip text="Example: team_3@mail.com" />
@@ -59,10 +59,10 @@
       <TextField fx:id="txtLogin" promptText="Enter login" GridPane.columnIndex="5" GridPane.rowIndex="5" />
       <PasswordField fx:id="pwdPassword" promptText="Enter password" GridPane.columnIndex="5" GridPane.rowIndex="7" />
       <PasswordField fx:id="pwdConfirmPassword" promptText="Re-enter password" GridPane.columnIndex="5" GridPane.rowIndex="9" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="196.0" text="Email:" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="316.0" text="Login:" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="197.0" text="Password:" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="308.0" text="Confirm password:" GridPane.columnIndex="3" GridPane.rowIndex="9" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="196.0" text="Email:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="316.0" text="Login:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="197.0" text="Password:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="17.0" prefWidth="308.0" text="Confirm password:" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9" />
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="4">
          <children>
             <ImageView fx:id="imgUserPhoto" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -80,17 +80,20 @@
                </tooltip></Button>
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.columnIndex="2" GridPane.columnSpan="7" GridPane.rowIndex="11">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="2.0" GridPane.columnIndex="1" GridPane.columnSpan="9" GridPane.rowIndex="11">
          <children>
-            <Label fx:id="lblErrorTermsOfUse" prefHeight="17.0" prefWidth="56.0" text="* Required " textFill="RED" visible="false">
+            <Label fx:id="lblErrorTermsOfUse" minWidth="-Infinity" prefHeight="17.0" prefWidth="70.0" text="* Required " textFill="RED" visible="false" wrapText="true">
                <font>
                   <Font size="10.0" />
                </font>
                <padding>
                   <Insets bottom="-5.0" left="-5.0" right="-5.0" top="-5.0" />
                </padding></Label>
-            <CheckBox fx:id="chkTermsOfUse" mnemonicParsing="false" prefHeight="17.0" prefWidth="98.0" text="I agree to the " />
-            <Hyperlink id="hpTermsOfUse" fx:id="hpTermsOfUse" onAction="#handleShowTermsOfUseAction" prefHeight="23.0" prefWidth="165.0" text="Terms of Use &amp; Privacy Policy" />
+            <CheckBox fx:id="chkTermsOfUse" minWidth="-Infinity" mnemonicParsing="false" prefHeight="23.0" prefWidth="109.0" text="I agree to the " wrapText="true">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></CheckBox>
+            <Hyperlink id="hpTermsOfUse" fx:id="hpTermsOfUse" minWidth="-Infinity" onAction="#handleShowTermsOfUseAction" prefHeight="23.0" prefWidth="168.0" text="Terms of Use &amp; Privacy Policy" wrapText="true" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="13">
@@ -98,10 +101,13 @@
             <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#handleSignUpAction" text="Sign Up" />
          </children>
       </HBox>
-      <HBox alignment="CENTER" prefHeight="23.0" prefWidth="229.0" spacing="2.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="15">
+      <HBox alignment="CENTER" prefHeight="23.0" prefWidth="229.0" spacing="2.0" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="15">
          <children>
-            <Label prefHeight="17.0" prefWidth="107.0" text="Already a member?" />
-            <Hyperlink id="hpSignIn" fx:id="hpSignIn" onAction="#handleSignInAction" prefHeight="23.0" prefWidth="47.0" text="Sign In" />
+            <Hyperlink id="hpSignIn" fx:id="hpSignIn" minWidth="-Infinity" onAction="#handleSignInAction" prefHeight="23.0" prefWidth="50.0" text="Sign In" wrapText="true">
+               <graphic>
+                  <Label minWidth="-Infinity" prefHeight="17.0" prefWidth="107.0" text="Already a member?" wrapText="true" />
+               </graphic>
+            </Hyperlink>
          </children>
       </HBox>
       <Label fx:id="lblErrorFullName" text="* Are you sure you entered the name correctly?" textFill="RED" visible="false" wrapText="true" GridPane.columnIndex="6" GridPane.columnSpan="4" GridPane.rowIndex="1">

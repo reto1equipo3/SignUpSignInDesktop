@@ -22,7 +22,7 @@ public class SignUpTestApplication extends javafx.application.Application {
 	 * window(SignIn window).
 	 *
 	 * @param stage The primary window of the application
-	 * @throws Exception
+	 * @throws Exception Something went wrong
 	 */
 	@Override
 	public void start(Stage stage) throws Exception {

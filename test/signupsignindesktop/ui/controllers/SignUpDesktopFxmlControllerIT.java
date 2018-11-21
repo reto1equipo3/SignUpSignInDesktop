@@ -1,44 +1,62 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package signupsignindesktop.ui.controllers;
 
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import model.UserBean;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
-import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.api.FxAssert.verifyThat;
+import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
-import static org.testfx.matcher.base.NodeMatchers.isFocused;
 import static org.testfx.matcher.base.NodeMatchers.isInvisible;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 import signupsignindesktop.applications.SignUpTestApplication;
 
 /**
+ * Basic TestFx class to test connection errors (repeated login and email) and a
+ * valid Sign Up action.
  *
  * @author Imanol
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 
+	/**
+	 * User to test with
+	 */
+	private final UserBean user;
+
+	/**
+	 * Default constructor. Creates a new user.
+	 */
+	public SignUpDesktopFxmlControllerIT() {
+		// Set up a valid user, but repeated login
+		user = new UserBean();
+		user.setFullName("Test SignUp");
+		user.setEmail("testSignUp@email.com");
+		user.setLogin("testSignUp");
+		user.setPassword("Abcd*1234");
+	}
+
+	/**
+	 * Starts the JavaFx application.
+	 * @param stage Stage to start
+	 * @throws Exception Something went wrong.
+	 */
 	@Override
 	public void start(Stage stage) throws Exception {
 		new SignUpTestApplication().start(stage);
 	}
 
-	@Override
-	public void stop() {
-	}
-
 	/**
-	 * Tests the initial state of the sign up window
+	 * Tests initial state of the view.
 	 */
+	@Ignore
 	@Test
-	public void test0_InitialState() {
+	public void test01_initialState() {
 		// Fullname
 		verifyThat("#txtFullName", isEnabled());
 		verifyThat("#txtFullName", hasText(""));
@@ -72,180 +90,187 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 
 		// Sign in hyperlink
 		verifyThat("#hpSignIn", isEnabled());
+
 	}
 
 	/**
-	 * Tests errors are shown when clicked on Sign up button with empty fields
-	 * and that errors disappear after writing on them.
+	 * Tests EmailNotUniqueException behaviour.
 	 */
+	@Ignore
 	@Test
-	public void test1_ErrorsAppearAndDisappear() {
-		// Click on sign up button with all fields empty
+	public void test02_repeatedEmail() {
+		// Fill in the fields
+		clickOn("#txtFullName");
+		write(user.getFullName());
+
+		clickOn("#txtEmail");
+		write("test01@email.com"); // Already existing email
+
+		clickOn("#txtLogin");
+		write(user.getLogin());
+
+		clickOn("#pwdPassword");
+		write(user.getPassword());
+
+		clickOn("#pwdConfirmPassword");
+		write(user.getPassword());
+
+		clickOn("#chkTermsOfUse");
+
+		// Sign Up user
 		clickOn("#btnSignUp");
 
-		// Fullname
-		verifyThat("#txtFullName", isFocused());
-		verifyThat("#lblErrorFullName", isVisible());
-		write("Paco Pico");
-		verifyThat("#lblErrorFullName", isInvisible());
-
-		// Email
-		clickOn("#txtEmail");
-		verifyThat("#lblErrorEmail", isVisible());
-		write("pPico@gmail.com");
-		verifyThat("#lblErrorEmail", isInvisible());
-
-		// Login
-		clickOn("#txtLogin");
-		verifyThat("#lblErrorLogin", isVisible());
-		write("pPico");
-		verifyThat("#lblErrorLogin", isInvisible());
-
-		// Password
-		clickOn("#pwdPassword");
-		verifyThat("#lblErrorPassword", isVisible());
-		write("Abcd*1234");
-		verifyThat("#lblErrorPassword", isInvisible());
-
-		// Terms of use
-		verifyThat("#lblErrorTermsOfUse", isVisible());
-		clickOn("#chkTermsOfUse");
-		verifyThat("#lblErrorTermsOfUse", isInvisible());
+		// Check that email error label is shown
+		verifyThat("* Email already used.", isVisible());
 	}
 
 	/**
-	 * Tests that only a valid fullname is accepted.
+	 * Tests LoginExistingException behaviour.
 	 */
 	@Test
-	public void test2_OnlyValidFullnameAccepted() {
+	public void test03_repeatedLogin() {
+		// Fill in the fields
+		clickOn("#txtFullName");
+		write(user.getFullName());
+
+		clickOn("#txtEmail");
+		write(user.getEmail());
+
+		clickOn("#txtLogin");
+		write("test01"); // Already existing login
+
+		clickOn("#pwdPassword");
+		write(user.getPassword());
+
+		clickOn("#pwdConfirmPassword");
+		write(user.getPassword());
+
+		clickOn("#chkTermsOfUse");
+
+		// Sign Up user
+		clickOn("#btnSignUp");
+
+		// Check that login error label is shown
+		verifyThat("* Login already exists.", isVisible());
+	}
+
+	/**
+	 * Tests only valid fullname is allowed.
+	 */
+	@Ignore
+	@Test
+	public void test04_invalidFullname() {
 		// Not null
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorFullName", isVisible());
+		verifyThat("* Field can not be empty.", isVisible());
 
 		// Not empty
 		write(" ");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorFullName", isVisible());
+		verifyThat("* Field can not be empty.", isVisible());
 
 		// Shorter than 50
 		write("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijk");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorFullName", isVisible());
+		verifyThat("* Fullname is too long.", isVisible());
 
 		// Matches pattern
 		write("123f%122rfgdfGg");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorFullName", isVisible());
-
-		// Is valid
-		write("Paco Pico");
-		clickOn("#btnSignUp");
-		verifyThat("#lblErrorFullName", isInvisible());
+		verifyThat("* Only uppercase or lowercase letters.", isVisible());
 	}
 
 	/**
-	 * Tests that only a valid email is accepted.
+	 * Tests only valid email is allowed.
 	 */
+	@Ignore
 	@Test
-	public void test3_OnlyValidEmailAccepted() {
+	public void test05_invalidEmail() {
 		// Not null
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorEmail", isVisible());
+		verifyThat("* Field can not be empty.", isVisible());
 
 		// Not empty
 		clickOn("#txtEmail");
 		write(" ");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorEmail", isVisible());
+		verifyThat("* Field can not be empty.", isVisible());
 
 		// Shorter than 50
 		doubleClickOn("#txtEmail");
 		write("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijk");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorEmail", isVisible());
+		verifyThat("* Email is too long.", isVisible());
 
 		// Matches pattern
 		doubleClickOn("#txtEmail");
 		write("123*Sdas@gasdasd.asdasdaa");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorEmail", isVisible());
-
-		// Is valid
-		doubleClickOn("#txtEmail");
-		clickOn("#txtEmail");
-		write("Paco-Pico_01@gmail.com");
-		clickOn("#btnSignUp");
-		verifyThat("#lblErrorEmail", isInvisible());
+		verifyThat("* Enter a valid email.", isVisible());
 	}
 
 	/**
-	 * Tests that only a valid login is accepted.
+	 * Tests only valid login is allowed.
 	 */
+	@Ignore
 	@Test
-	public void test4_OnlyValidLoginAccepted() {
+	public void test06_invalidLogin() {
 		// Not null
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorLogin", isVisible());
+		verifyThat("* How are you supposed to sign in?", isVisible());
 
 		// Not empty
 		clickOn("#txtLogin");
 		write(" ");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorLogin", isVisible());
+		verifyThat("* How are you supposed to sign in?", isVisible());
 
 		// Shorter than 20
 		doubleClickOn("#txtLogin");
 		write("abcdefghijabcdefghijk");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorLogin", isVisible());
+		verifyThat("* Login is too long.", isVisible());
 
 		// Matches pattern
 		doubleClickOn("#txtLogin");
 		write("123sadgsdSDFDSR#$");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorLogin", isVisible());
-
-		// Is valid
-		doubleClickOn("#txtLogin");
-		clickOn("#txtLogin");
-		write("pPaco1");
-		clickOn("#btnSignUp");
-		verifyThat("#lblErrorLogin", isInvisible());
+		verifyThat("* Login can only be composed by letters and numbers.", isVisible());
 	}
 
 	/**
-	 * Tests that only a valid password is accepted and the confirmation
-	 * password is correct.
+	 * Tests only valid password is allowed.
 	 */
+	@Ignore
 	@Test
-	public void test5_OnlyValidPasswordAccepted() {
+	public void test07_invalidPassword() {
 		// Not null
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
+		verifyThat("* Security first, enter a password.", isVisible());
 
 		// Not empty
 		clickOn("#pwdPassword");
 		write(" ");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
+		verifyThat("* Security first, enter a password.", isVisible());
 
 		// Shorter than 15
 		doubleClickOn("#pwdPassword");
 		write("1234567890123456");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
+		verifyThat("* Password is too long.", isVisible());
 
 		// Longer than 6
 		doubleClickOn("#pwdPassword");
-		write("123456");
+		write("12345");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
+		verifyThat("* Password is too short.", isVisible());
 
 		// Matches the pattern
 		doubleClickOn("#pwdPassword");
 		write("abcdfgast");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
+		verifyThat("* Not secure enough! Try combining lowercase, uppercase and numbers.", isVisible());
 
 		// Both password are equal
 		doubleClickOn("#pwdPassword");
@@ -253,25 +278,60 @@ public class SignUpDesktopFxmlControllerIT extends ApplicationTest {
 		clickOn("#pwdConfirmPassword");
 		write("asdasdfasdf");
 		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isVisible());
-
-		// Is valid
-		doubleClickOn("#pwdPassword");
-		clickOn("#pwdPassword");
-		write("Abcd*1234");
-		doubleClickOn("#pwdConfirmPassword");
-		write("Abcd*1234");
-		clickOn("#btnSignUp");
-		verifyThat("#lblErrorPassword", isInvisible());
+		verifyThat("* Passwords must coincide.", isVisible());
 	}
 
 	/**
-	 * Test that sign in window is opened when click on the hyperlink.
+	 * Tests terms of use are accepted.
+	 */
+	@Ignore
+	@Test
+	public void test08_unacceptedTermsOfUse() {
+		clickOn("#btnSignUp");
+		verifyThat("* Required", isVisible());
+	}
+
+	/**
+	 * Tests valid sign up action.
 	 */
 	@Test
-	public void test7_GoToSignIn(){
+	public void test09_validUser() {
+		// Fill in the fields
+		clickOn("#txtFullName");
+		write(user.getFullName());
+
+		clickOn("#txtEmail");
+		write(user.getEmail());
+
+		clickOn("#txtLogin");
+		write(user.getLogin());
+
+		clickOn("#pwdPassword");
+		write(user.getPassword());
+
+		clickOn("#pwdConfirmPassword");
+		write(user.getPassword());
+
+		clickOn("#chkTermsOfUse");
+
+		// Sign Up user
+		clickOn("#btnSignUp");
+
+		// Check new user signed up correctly and SignInView is visible
+		sleep(1000);
+		push(KeyCode.ENTER);
+		verifyThat("#gpSignIn", isVisible());
+	}
+
+	/**
+	 * Tests sign in view opens correctly.
+	 */
+	@Ignore
+	@Test
+	public void test10_openSignUp() {
+		// Open sign up view
 		clickOn("#hpSignIn");
-		
-		verifyThat("#gpIdentificar", isVisible());
+
+		verifyThat("#gpSignIn", isVisible());
 	}
 }
