@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="gpSignIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signupsignindesktop.ui.controllers.SignInDesktopFxmlController">
+<GridPane fx:id="gpSignIn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="signupsignindesktop.ui.controllers.SignInDesktopFxmlController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.20001220703125" minWidth="10.0" prefWidth="182.80001220703124" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="252.79997558593746" minWidth="10.0" prefWidth="236.39998779296874" />
@@ -74,19 +74,15 @@
       </Separator>
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="3" GridPane.rowIndex="5">
          <children>
-            <Hyperlink fx:id="hpSignUp" prefHeight="23.0" prefWidth="355.0" text="SignUp" textAlignment="RIGHT">
-               <graphic>
-                  <Label fx:id="lblSignUp" prefHeight="17.0" prefWidth="247.0" text="Do you not have an account yet? Click here to" />
-               </graphic>
-               <HBox.margin>
-                  <Insets left="110.0" top="20.0" />
-               </HBox.margin>
+            <Label text="Do yo have not an account yet? Click to ">
                <padding>
-                  <Insets left="50.0" />
+                  <Insets left="150.0" top="50.0" />
                </padding>
-               <tooltip>
-                  <Tooltip text="Click to register in the aplication" />
-               </tooltip>
+            </Label>
+            <Hyperlink fx:id="hpSignUp" text="SignUp">
+               <padding>
+                  <Insets top="48.0" />
+               </padding>
             </Hyperlink>
          </children>
       </HBox>

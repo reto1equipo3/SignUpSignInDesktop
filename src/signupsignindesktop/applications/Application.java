@@ -15,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 import signupsignindesktop.businesslogic.Logic;
 import signupsignindesktop.businesslogic.LogicFactory;
-import static signupsignindesktop.businesslogic.LogicFactory.TEST_TYPE;
 import static signupsignindesktop.businesslogic.LogicFactory.USER_CLIENT_TYPE;
 import signupsignindesktop.ui.controllers.SignInDesktopFxmlController;
 
@@ -29,7 +28,7 @@ public class Application extends javafx.application.Application {
      /**
      * Entry point for the application. Loads, sets and shows primary window(SignIn window).
      * @param stage The primary window of the application
-     * @throws Exception 
+     * @throws Exception Shows an exception
      */
     @Override
     public void start(Stage stage) throws Exception {
