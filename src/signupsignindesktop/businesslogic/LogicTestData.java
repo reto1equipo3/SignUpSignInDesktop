@@ -52,10 +52,10 @@ public class LogicTestData implements Logic {
      *
      * @param user The userBean object to be Sign In.
      * @return user to be Sign in.
-     * @throws LoginNotExistingException
-     * @throws BadPasswordException
-     * @throws DatabaseException
-     */
+     * @throws LoginNotExistingException throws exception
+     * @throws BadPasswordException throws exception
+     * @throws DatabaseException throws exception
+     */ 
     @Override
     public UserBean signIn(UserBean user) throws LoginNotExistingException, BadPasswordException, DatabaseException {
 
@@ -92,8 +92,8 @@ public class LogicTestData implements Logic {
      * if that's the case.
      *
      * @param user The userBean to be Sign Up.
-     * @throws LoginExistingException
-     * @throws EmailNotUniqueException
+     * @throws LoginExistingException throws exception
+     * @throws EmailNotUniqueException throws exception
      */
     @Override
     public void signUp(UserBean user) throws LoginExistingException, EmailNotUniqueException {

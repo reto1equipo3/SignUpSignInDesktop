@@ -7,10 +7,14 @@ package signupsignindesktop.ui.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +37,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.UserBean;
 import signupsignindesktop.businesslogic.LogicTestData;
-
 
 /**
  * FXML Controller UserView class for User view in SignUpSingIn applicattion. It
@@ -71,7 +74,7 @@ public class UserViewDesktopFxmlController extends GenericController {
      * Menu button that contains an item to Log out.
      */
     @FXML
-    private MenuButton btnSettings;
+    private MenuButton btnExit;
     /**
      * Menut item to fire action to log out at the aplication and returns to
      * Sign in view.
@@ -100,6 +103,37 @@ public class UserViewDesktopFxmlController extends GenericController {
     @FXML
     private Label lblEmailUser;
 
+    //CODIGO NUEVO
+    /**
+     * User's id UI label field.
+     */
+    @FXML
+    private Label lblIdUser;
+
+    /**
+     * User's status UI label field.
+     */
+    @FXML
+    private Label lblStatusUser;
+
+    /**
+     * User's privilege UI label field.
+     */
+    @FXML
+    private Label lblPrivilegeUser;
+    /**
+     * User's Last Acces UI label field.
+     */
+    @FXML
+    private Label lblLastAccessUser;
+
+    /**
+     * Menut item to fire action to close application or log out at the aplication and returns to
+     * Sign in view.
+     */
+    @FXML
+    private MenuItem btnClose;
+
     //Setters del user es el que manda la interfaz SignIn.  
     public void setUser(UserBean user) {
 
@@ -116,10 +150,11 @@ public class UserViewDesktopFxmlController extends GenericController {
 
         Scene scene = new Scene(root);//Crear la escena a la raiz del nodo root.
         stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        //Asociamos la escena a la ventana
+       //Asociamos la escena a la ventana
         stage.setScene(scene);
-
+        //Vamos hacerla modal
+         stage.initModality(Modality.APPLICATION_MODAL);
+                
         //Le vamos a dar un titulo a la ventana.       
         stage.setTitle("User View");
 
@@ -165,28 +200,56 @@ public class UserViewDesktopFxmlController extends GenericController {
             lblEmailUser.setText(user.getEmail());
         }
 
+        //CODIGO NUEVO
+        //Mostrar el id del User
+        if (user.getId() == null) {
+            lblIdUser.setText("Id not found");
+        } else {
+            lblIdUser.setText(user.getId().toString());
+
+        }
+
+        //Mostrar lastAccess del user
+         LOGGER.info(user.getLastAcess().toString());
+         LOGGER.info(new Date(user.getLastAcess().getTime()).toString());
+        if(user.getLastAcess()!= null ){
+        String date = new Date(user.getLastAcess().getTime()).toString();
+       
+        lblLastAccessUser.setText(date);
+        }else {      
+         lblLastAccessUser.setText("Last Access not found");
+        } 
+
+            
+
+        
+
+        //Mostrar el
         //La foto del usuario
-        if (user.getPhoto() == null) {
+/*        if (user.getPhoto() == null) {
             imgUserPhoto.setImage(new Image("/signupsignindesktop/ui/img/defaultUserPhoto.png"));
         } else {
             imgUserPhoto.setImage((Image) user.getPhoto());
         }
-
-        //El boton esta escuchando. 
+         */
+        //Los botones estan escuchando. 
         btnLogOut.setOnAction(this::handleLogOutAction);
+        btnClose.setOnAction(this::handleCloseAction);
 
         //Mnoemónico
-        btnSettings.setMnemonicParsing(true);
-        btnSettings.setText("_Settings");
+        btnExit.setMnemonicParsing(true);
+        btnExit.setText("_Exit");
         btnLogOut.setMnemonicParsing(true);
         btnLogOut.setText("_Log Out");
+        btnClose.setMnemonicParsing(true);
+        btnClose.setText("_Close");
 
-        btnSettings.setTooltip(new Tooltip("Item of Log Out"));
+        btnExit.setTooltip(new Tooltip("Item of Log Out or close application"));
 
     }
 
     /**
-     * Action event handler for log out button. Close session and return to the
+     * Action event handler for log out button. Return to the
      * sign in.
      *
      * @param event The ActionEvent object for the event.
@@ -202,7 +265,11 @@ public class UserViewDesktopFxmlController extends GenericController {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK) {
-            try {
+            
+            
+              //Cerramos la ventana actual
+                stage.hide();
+           /* try {
                 //Load node graph from fxml file
                 FXMLLoader loader
                         = new FXMLLoader(getClass().getResource("/signupsignindesktop/ui/fxml/SignInDesktopFXMLDocument.fxml"));
@@ -220,7 +287,27 @@ public class UserViewDesktopFxmlController extends GenericController {
                         "UI UserView: Error opening SignIn window: {0}",
                         ex.getMessage());
             }
+            */
         }
     }
+    /**
+     * Action event handler for close button. Close session. 
+     *
+     * @param event The ActionEvent object for the event.
+     */
 
+    private void handleCloseAction(ActionEvent event) {
+
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText(null);  //No queremos que salga titulo eb la cabecera
+        alert.setContentText("Are you sure you want to close application?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+               Platform.exit();
+        }
+
+    }
 }

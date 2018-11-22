@@ -15,6 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.Set;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import model.UserBean;
@@ -113,9 +115,13 @@ public class SignInDesktopFxmlController extends GenericController {
 		LOGGER.info("Initializing Login stage");
 		//Create a scene 
 		Scene scene = new Scene(root);
-		stage = new Stage();
+		stage = new Stage();           
+                
+               
 		//Associate scene to stage(window)  
 		stage.setScene(scene);
+                
+                
 
 		//Set window title
 		stage.setTitle("Sign In");
@@ -221,6 +227,8 @@ public class SignInDesktopFxmlController extends GenericController {
 	private void handleSignUpAction(ActionEvent event) {
 		LOGGER.info("Beginning SignInDesktopController::handleSignUpAction.");
 		try {
+                    
+                   
 			//Load node graph from fxml file 
 			FXMLLoader loader
 				= new FXMLLoader(getClass().getResource("/signupsignindesktop/ui/fxml/SignUpDesktopFXMLDocument.fxml"));
@@ -295,6 +303,8 @@ public class SignInDesktopFxmlController extends GenericController {
 	 */
 	private void GoToUserView() {
 		try {
+                    
+                     
 			//Load node graph from fxml file 
 			FXMLLoader loader
 				= new FXMLLoader(getClass().getResource("/signupsignindesktop/ui/fxml/UserViewDesktopFXMLDocument.fxml"));
@@ -309,9 +319,18 @@ public class SignInDesktopFxmlController extends GenericController {
 
 			//Initializes stage
 			controller.initStage(root);
-
-			//hides login stage
-			stage.hide();
+                        
+                        //  Y vaciamos los campos para cuando se oculte la USERVIEW
+                        
+                        if(!chkRememberLogin.isSelected()){
+                        txtLogin.setText("");
+                        pwdPassword.setText("");
+                        }else{
+                         pwdPassword.setText("");
+                        }
+                        //NO QUEREMOS QUE SE ESCONDA
+			/*//hides login stage
+			stage.hide();*/
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 				"UI SignUpDesktopFxmlController: Error opening UserView window.",

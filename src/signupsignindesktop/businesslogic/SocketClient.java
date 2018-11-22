@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 public class SocketClient {
 
 	/**
-	 * @param PORT int: The port the app will use to connect to the database
-	 * @param IP String: The IP of the database
+	 *  The port the app will use to connect to the database
+	 * The IP of the database
 	 */
 	private final int PORT = 6000;
 	private final String IP = "127.0.0.1";
@@ -31,7 +31,7 @@ public class SocketClient {
 	/**
 	 * The method that initiates the client side of the socket
 	 *
-	 * @param msg
+	 * @param msg message
 	 * @return answer usermessage.Message: returns the message to the class
 	 * LogicImpementation
 	 */

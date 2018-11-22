@@ -470,7 +470,7 @@ public class SignUpDesktopFxmlController extends GenericController {
 			user.setLogin(txtLogin.getText());
 			user.setPassword(pwdPassword.getText());
 			if (imgUserPhoto != null || imgUserPhoto.getImage() != null) {
-				user.setPhoto(imgUserPhoto.getImage());
+//				user.setPhoto(imgUserPhoto.getImage());
 			}
 			// Send the user to the business logic
 			try {
