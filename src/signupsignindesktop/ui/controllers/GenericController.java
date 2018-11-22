@@ -1,3 +1,4 @@
+
 package signupsignindesktop.ui.controllers;
 
 import java.util.logging.Logger;
@@ -94,3 +95,4 @@ public class GenericController {
 
 	}
 }
+
