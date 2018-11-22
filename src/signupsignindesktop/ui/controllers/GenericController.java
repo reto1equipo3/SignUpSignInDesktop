@@ -1,3 +1,4 @@
+
 package signupsignindesktop.ui.controllers;
 
 import java.util.logging.Logger;
@@ -73,7 +74,8 @@ public class GenericController {
 
 	/**
 	 * Sets the {@link HostServices} to reach them from controllers.
-	 * @param hostServices Host services of the javafx application
+	 * @param hostServices hostservice of the JavaFX application
+
 	 */
 	public void setHostServices(HostServices hostServices) {
 		this.hostServices = hostServices;
@@ -93,3 +95,4 @@ public class GenericController {
 
 	}
 }
+
