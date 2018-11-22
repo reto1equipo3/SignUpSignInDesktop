@@ -45,6 +45,6 @@ public interface Logic {
      * This method ends the user's session
      * @param user. The UserBean object to be ended
      * @throws DatabaseException Shows this exception if you can not connect to the database
-     */
+    */
     public void logOut(UserBean user) throws DatabaseException;
 }
