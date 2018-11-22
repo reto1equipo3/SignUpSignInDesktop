@@ -73,7 +73,8 @@ public class GenericController {
 
 	/**
 	 * Sets the {@link HostServices} to reach them from controllers.
-	 * @param hostServices  host
+	 * @param hostServices hostservice of the JavaFX application
+
 	 */
 	public void setHostServices(HostServices hostServices) {
 		this.hostServices = hostServices;

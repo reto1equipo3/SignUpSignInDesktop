@@ -231,8 +231,14 @@ public class UserViewDesktopFxmlController extends GenericController {
         } else {
             imgUserPhoto.setImage((Image) user.getPhoto());
         }
+
+*/
+
+        //El boton esta escuchando. 
+
          */
         //Los botones estan escuchando. 
+
         btnLogOut.setOnAction(this::handleLogOutAction);
         btnClose.setOnAction(this::handleCloseAction);
 

@@ -9,15 +9,16 @@ package signupsignindesktop.ui.controllers;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.runners.MethodSorters;
 import static org.testfx.api.FxAssert.verifyThat;
-
 
 import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isDisabled;
 import static org.testfx.matcher.base.NodeMatchers.isEnabled;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
+
 
 import signupsignindesktop.applications.Application;
 
@@ -34,15 +35,18 @@ public class SignInDesktopFxmlControllerIT extends ApplicationTest{
         new Application().start(stage);
     }
     
-    @Test
-    public void test01_openSignUpWindow(){
-        clickOn("#hpSignUp");
-        verifyThat("#gpSignUp", isVisible());
-        clickOn("#hpSignIn");
-        verifyThat("#gpSignIn", isVisible());
+    @Ignore
+    @Test 
+    public void test01_btnSignInIsEnabled(){
+        clickOn("#txtLogin");
+        write("Igor");
+        clickOn("#pwdPassword");
+        write("Abcd*123");
+        verifyThat("#btnSignIn", isEnabled());
     }
     
-   
+    
+    @Ignore
     @Test
     public void test02_btnSignInIsDisabled(){
        verifyThat("#txtLogin", hasText(""));
@@ -50,8 +54,9 @@ public class SignInDesktopFxmlControllerIT extends ApplicationTest{
        verifyThat("#btnSignIn", isDisabled()); 
     }
     
-   
     
+   
+    @Ignore
     @Test
     public void test03_btnSignInIsDisabled(){
         clickOn("#txtLogin");
@@ -65,68 +70,112 @@ public class SignInDesktopFxmlControllerIT extends ApplicationTest{
         verifyThat("#btnSignIn", isDisabled());
     }
     
+   
+    @Ignore
     @Test
-    public void test04_btnSignInIsEnabled(){
-        clickOn("#txtLogin");
-        write("login");
-        clickOn("#pwdPassword");
-        write("password");
-        verifyThat("#btnSignIn", isEnabled());
+    public void test04_openSignUpWindow(){
+        clickOn("#hpSignUp");
+        verifyThat("#gpSignUp", isVisible());
+        clickOn("#hpSignIn");
+        verifyThat("#gpSignIn", isVisible());
+        
     }
-    
-    
+  
     @Test
     public void test05_openUserViewWindow(){
         clickOn("#txtLogin");
-        write("login1");
+        write("Igor");
         clickOn("#pwdPassword");
-        write("password1");
+        write("Abcd*123");
         clickOn("#btnSignIn");
         verifyThat("#gpVistaUsuario", isVisible());
     }
     
+    
     @Test
     public void test06_LoginError(){
         clickOn("#txtLogin");
-        write("login");
+        write("Igo");
         clickOn("#pwdPassword");
-        write("password1");
+        write("Abcd*123");
         clickOn("#btnSignIn");
         verifyThat("#lblErrorLogin", isVisible());
     }
+    
+    
+    
     @Test
     public void test07_PasswordError(){
         clickOn("#txtLogin");
-        write("login1");
+        write("Igor");
         clickOn("#pwdPassword");
-        write("password");
+        write("Abcd*12");
         clickOn("#btnSignIn");
         verifyThat("#lblErrorPass", isVisible());
     }
     
     
-     @Test
-    public void test08_TextFieldLength(){
+    
+    @Ignore
+    @Test
+    public void test08_LoginPatternError(){
+        clickOn("#txtLogin");
+        write("Igo?");
+        clickOn("#pwdPassword");
+        write("Abcd*123");
+        clickOn("#btnSignIn");
+        verifyThat("#lblErrorLogin", isVisible()); 
+    }
+    
+    
+   
+    
+    
+    @Ignore
+    @Test
+    public void test09_PasswordToShort(){
+        clickOn("#txtLogin");
+        write("Igor");
+        clickOn("#pwdPassword");
+        write("Abc*1");
+        clickOn("#btnSignIn");
+        verifyThat("#lblErrorPass", isVisible());
+        
+    }
+ 
+    @Ignore
+    @Test
+    public void test10_PasswordPatternError(){
+        clickOn("#txtLogin");
+        write("Igor");
+        clickOn("#pwdPassword");
+        write("abcd123");
+        clickOn("#btnSignIn");
+        verifyThat("#lblErrorPass", isVisible());  
+    }
+    
+    @Ignore
+    @Test
+    public void test11_TextFieldLength(){
         clickOn("#txtLogin");
         write("Probando que no escriba mas de 20 caracteres");
         clickOn("#pwdPassword");
         write("Probando que no escriba mas de 15 caracteres");
-        clickOn("#chkRememberLogin");
-        clickOn("#btnSignIn");
-        verifyThat("#gpVistaUsuario", isVisible());
+       
     }
     
+    @Ignore
     @Test
-    public void test09_RememberLogin(){
+    public void test12_RememberLogin(){
         clickOn("#txtLogin");
-        write("login1");
+        write("Igor");
         clickOn("#pwdPassword");
-        write("password1");
+        write("Abcd*123");
         clickOn("#chkRememberLogin");
         clickOn("#btnSignIn");
-        verifyThat("#gpVistaUsuario", isVisible());
-        
+        verifyThat("#gpVistaUsuario", isVisible());  
     }
+  
     
    
    

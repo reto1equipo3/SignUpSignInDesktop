@@ -11,7 +11,7 @@ import exceptions.EmailNotUniqueException;
 import exceptions.LoginExistingException;
 import exceptions.LoginNotExistingException;
 import java.util.ArrayList;
-import java.util.logging.Level;
+
 import java.util.logging.Logger;
 import model.UserBean;
 
@@ -52,10 +52,11 @@ public class LogicTestData implements Logic {
      *
      * @param user The userBean object to be Sign In.
      * @return user to be Sign in.
-     * @throws LoginNotExistingException throws exception
-     * @throws BadPasswordException throws exception
-     * @throws DatabaseException throws exception
-     */ 
+     * @throws LoginNotExistingException Shows this exception if the Email doesn´t exist
+     * @throws BadPasswordException Shows this exception if the Password is wrong
+     * @throws DatabaseException Shows this exception if you can not connect to the database
+     */
+
     @Override
     public UserBean signIn(UserBean user) throws LoginNotExistingException, BadPasswordException, DatabaseException {
 
@@ -92,8 +93,9 @@ public class LogicTestData implements Logic {
      * if that's the case.
      *
      * @param user The userBean to be Sign Up.
-     * @throws LoginExistingException throws exception
-     * @throws EmailNotUniqueException throws exception
+     * @throws LoginExistingException Shows this exception if the Login already exist
+     * @throws EmailNotUniqueException Shows this exception if the Email already exist
+
      */
     @Override
     public void signUp(UserBean user) throws LoginExistingException, EmailNotUniqueException {

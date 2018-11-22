@@ -13,15 +13,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Optional;
 import java.util.Scanner;
+
 import java.util.Set;
+
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,7 +30,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
@@ -51,7 +51,10 @@ import model.UserBean;
  * @author Igor
  */
 public class SignInDesktopFxmlController extends GenericController {
-
+        /**
+        *
+        * Attribute to appear the information text.
+        */
 	private static final Logger logger = Logger.getLogger("SignInDesktop.controller");
 
 	private UserBean user;
@@ -96,7 +99,12 @@ public class SignInDesktopFxmlController extends GenericController {
 	 */
 	@FXML
 	private Label lblErrorPass;
-
+        
+        /**
+	 * Method that receives the user 
+         * 
+         * @param user Data of the user
+	 */
 	public void setUser(UserBean user) {
 		this.user = user;
 	}
@@ -176,45 +184,73 @@ public class SignInDesktopFxmlController extends GenericController {
 	@FXML
 	private void handleSignInAction(ActionEvent event) {
 		LOGGER.info("Beginning SignInDesktopController::handleSignInAction.");
+                boolean validFields = true;
+    
+                try{
+                    validateLogin(txtLogin.getText());
+                }catch(IllegalArgumentException e){
+                    LOGGER.log(Level.SEVERE, "Sign In controller::handleSignInAction: {0}", e.getMessage());
 
-		//Validates login and password fields
-		user = new UserBean();
-		user.setLogin(txtLogin.getText());
-		user.setPassword(pwdPassword.getText());
+                    lblErrorLogin.setText(e.getMessage());
+                    lblErrorLogin.setVisible(true);
 
-		try {
-			user = logic.signIn(user);
-			if (chkRememberLogin.isSelected()) {
-				RememberUserLogin();
-			}
-			GoToUserView();
+                    txtLogin.setStyle("-fx-border-color:red;");
+                    txtLogin.requestFocus();
 
-		} catch (LoginNotExistingException e) {
-			LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", e.getMessage());
+                    validFields = false;
+                }
+                try{
+                    validatePassword(pwdPassword.getText());
+                }catch(IllegalArgumentException e){
+                    LOGGER.log(Level.SEVERE, "Sign In controller::handleSignInAction: {0}", e.getMessage());
 
-			lblErrorLogin.setText("*Wrong login.");
-			lblErrorLogin.setVisible(true);
+                    lblErrorPass.setText(e.getMessage());
+                    lblErrorPass.setVisible(true);
 
-			txtLogin.setStyle("-fx-border-color:red;");
-			txtLogin.requestFocus();
+                    pwdPassword.setStyle("-fx-border-color:red;");
+                    pwdPassword.requestFocus();
 
-		} catch (BadPasswordException e) {
-			LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", e.getMessage());
+			validFields = false;
+                }
+                
+                if(validFields){
+                    //Validates login and password fields
+                    user = new UserBean();
+                    user.setLogin(txtLogin.getText());
+                    user.setPassword(pwdPassword.getText());
+                    try {
+                        user = logic.signIn(user);
+                        if (chkRememberLogin.isSelected()) {
+                            RememberUserLogin();
+                        }
+                        GoToUserView();
 
-			lblErrorPass.setText("*Wrong Password.");
-			lblErrorPass.setVisible(true);
+                    } catch (LoginNotExistingException e) {
+                            LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", e.getMessage());
 
-			pwdPassword.setStyle("-fx-border-color:red;");
-			pwdPassword.requestFocus();
+                            lblErrorLogin.setText("*Wrong login.");
+                            lblErrorLogin.setVisible(true);
 
-		} catch (DatabaseException ex) {
-			LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", ex.getMessage());
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setHeaderText(null);
-			alert.setContentText("Sorry, something went wrong. Try again later.");
-			alert.showAndWait();
-		}
+                            txtLogin.setStyle("-fx-border-color:red;");
+                            txtLogin.requestFocus();
 
+                    } catch (BadPasswordException e) {
+                            LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", e.getMessage());
+
+                            lblErrorPass.setText("*Wrong Password.");
+                            lblErrorPass.setVisible(true);
+
+                            pwdPassword.setStyle("-fx-border-color:red;");
+                            pwdPassword.requestFocus();
+
+                    } catch (DatabaseException ex) {
+                            LOGGER.log(Level.SEVERE, "SignInDesktopController::handleSignInAction: {0}", ex.getMessage());
+                            Alert alert = new Alert(AlertType.ERROR);
+                            alert.setHeaderText(null);
+                            alert.setContentText("Sorry, something went wrong. Try again later.");
+                            alert.showAndWait();
+                    }
+                }
 	}
 
 	/**
@@ -265,24 +301,24 @@ public class SignInDesktopFxmlController extends GenericController {
 		if (txtLogin.getText().trim().length() > this.MAX_LENGTH
 			|| pwdPassword.getText().trim().length() > this.MAX_LENGTH) {
 
-			LOGGER.info("UI SignInDesktopFxmlController: The maximum length of the field is 255 characters: {0}");
-			btnSignIn.setDisable(true);
+                    LOGGER.info("UI SignInDesktopFxmlController: The maximum length of the field is 255 characters: {0}");
+                    btnSignIn.setDisable(true);
 		} //If text fields are empty disable Sign In button
 		else if (txtLogin.getText().trim().isEmpty() || pwdPassword.getText().trim().isEmpty()) {
-			btnSignIn.setDisable(true);
+                    btnSignIn.setDisable(true);
 		} //Enable Sign In button
 		else {
-			btnSignIn.setDisable(false);
+                    btnSignIn.setDisable(false);
 		}
 
 		//Put Login textField border color to default color
 		if (!txtLogin.getText().trim().isEmpty()) {
-			txtLogin.setStyle("-fx-border-color:AXIS_COLOR;");
+			txtLogin.setStyle("");
 			lblErrorLogin.setVisible(false);
 		}
 		//Put Password textField border color to default color
 		if (!pwdPassword.getText().trim().isEmpty()) {
-			pwdPassword.setStyle("-fx-border-color:AXIS_COLOR;");
+			pwdPassword.setStyle("");
 			lblErrorPass.setVisible(false);
 		}
 
@@ -396,6 +432,42 @@ public class SignInDesktopFxmlController extends GenericController {
 					e.getMessage());
 			}
 		}
+	}
+        
+        /**
+	 * Method for validating login.
+	 *
+	 * @param login Login to validate
+	 * @throws IllegalArgumentException Login is not valid.
+	 */
+        private void validateLogin(String login) throws IllegalArgumentException {
+		String LOGIN_PATTERN = "[a-zA-Z0-9]+";
+		Pattern pattern = Pattern.compile(LOGIN_PATTERN);
+
+		if (!pattern.matcher(login).matches()) {
+			throw new IllegalArgumentException("*Only letters and numbers");
+		}
+	}
+        
+        
+        /**
+	 * Method for validating password.
+	 *
+	 * @param password Password to validate.
+	 * @throws IllegalArgumentException Password is not valid.
+	 */
+        private void validatePassword(String password) throws IllegalArgumentException {
+		String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
+		Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+
+		if (!pattern.matcher(password).matches()) {
+			throw new IllegalArgumentException("*Not secure enough!");
+		}
+
+		if (password.trim().length() < 6) {
+			throw new IllegalArgumentException("*Password is too short.");
+		}
+
 	}
 
 }

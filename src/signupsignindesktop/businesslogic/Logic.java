@@ -24,10 +24,10 @@ public interface Logic {
     /**
      * This method adds a new created UserBean.
      * @param user The UserBean object to be added.
-     * @return user
+     * @return Return users data
      * @throws LoginNotExistingException If login does not exist.
      * @throws BadPasswordException If password is wrong.
-     * @throws exceptions.DatabaseException throws exception
+     * @throws DatabaseException Shows this exception if you can not connect to the database
      */
     public UserBean signIn(UserBean user) throws LoginNotExistingException, BadPasswordException, DatabaseException;
     
@@ -36,7 +36,7 @@ public interface Logic {
      * @param user .The UserBean object to be initialized
      * @throws LoginExistingException If login already exists.
      * @throws EmailNotUniqueException If email is already used.
-     * @throws exceptions.DatabaseException throws exception
+     * @throws DatabaseException Shows this exception if you can not connect to the database
      */
     public void signUp(UserBean user) throws LoginExistingException, EmailNotUniqueException, DatabaseException;
     
@@ -44,7 +44,7 @@ public interface Logic {
     /**
      * This method ends the user's session
      * @param user. The UserBean object to be ended
-	 * @throws exceptions.DatabaseException throws exception
-     */
+     * @throws DatabaseException Shows this exception if you can not connect to the database
+    */
     public void logOut(UserBean user) throws DatabaseException;
 }

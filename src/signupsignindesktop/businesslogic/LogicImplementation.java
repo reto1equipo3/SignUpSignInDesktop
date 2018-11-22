@@ -101,7 +101,7 @@ public class LogicImplementation implements Logic {
 			case E_ERROR:
 				LOGGER.log(Level.SEVERE,
 					"LogiImplementation::signUp: Exception something went wrong.");
-				throw new EmailNotUniqueException("Error:\n" + message.getMessage());
+				throw new DatabaseException("Error:\n" + message.getMessage());
 		}
 	}
 

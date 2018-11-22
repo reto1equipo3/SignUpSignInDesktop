@@ -5,7 +5,7 @@
  */
 package signupsignindesktop.businesslogic;
 
-import java.io.File;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -20,10 +20,7 @@ import java.util.logging.Logger;
  */
 public class SocketClient {
 
-	/**
-	 *  The port the app will use to connect to the database
-	 * The IP of the database
-	 */
+
 	private final int PORT = 6000;
 	private final String IP = "127.0.0.1";
 	private static final Logger LOGGER = Logger.getLogger("businessLogic");
@@ -31,7 +28,8 @@ public class SocketClient {
 	/**
 	 * The method that initiates the client side of the socket
 	 *
-	 * @param msg message
+
+	 * @param msg Shows the message
 	 * @return answer usermessage.Message: returns the message to the class
 	 * LogicImpementation
 	 */
